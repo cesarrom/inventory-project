@@ -1,0 +1,17 @@
+{
+  "name": "inventory-api",
+  "description": "intended to implement a client for the inventory rest api",
+  "license": "Unlicense",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  }
+}

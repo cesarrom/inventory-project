@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="inventory">
+		<class>com.inventory.models.Category</class>
+		<class>com.inventory.models.Customer</class>
+		<class>com.inventory.models.MovementDetail</class>
+		<class>com.inventory.models.MovementType</class>
+		<class>com.inventory.models.Movement</class>
+		<class>com.inventory.models.ProductRepository</class>
+		<class>com.inventory.models.Product</class>
+		<class>com.inventory.models.Repository</class>
+		<class>com.inventory.models.Supplier</class>
+	</persistence-unit>
+</persistence>

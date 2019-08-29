@@ -1,0 +1,26 @@
+server:
+  port: 9091
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: inventory
+  data:
+    rest:
+      basePath: /
+  datasource:
+    name: stockable
+    password: cesarrom26$
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/stockable
+    username: cesarrom
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+          
