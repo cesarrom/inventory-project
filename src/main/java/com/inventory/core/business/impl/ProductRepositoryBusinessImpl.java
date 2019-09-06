@@ -44,7 +44,7 @@ public class ProductRepositoryBusinessImpl implements ProductRepositoryBusiness 
 				.setProduct(this.businesses.getProductBusiness().find(productRepository.getProduct().getId()));
 		Repository desiredRepo = this.businesses.getRepositoryBusuiness().find(productRepository.getRepository().getId());
 		crudProductRepository.setRepository(desiredRepo);
-		crudProductRepository.setExternal(desiredRepo.isExternal());
+		crudProductRepository.setExternal(desiredRepo.getExternal());
 		return crudProductRepository;
 	}
 

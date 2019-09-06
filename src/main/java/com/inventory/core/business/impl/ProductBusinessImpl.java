@@ -11,6 +11,7 @@ import com.inventory.core.dao.DaoIndex;
 import com.inventory.helpers.exceptions.BadRequestException;
 import com.inventory.helpers.exceptions.NotFoundException;
 import com.inventory.models.Product;
+import com.inventory.models.ProductRepository;
 import com.inventory.models.dto.ProductDto;
 import com.inventory.models.query.ProductQuery;
 import com.inventory.utils.ObjectUtils;
@@ -40,6 +41,18 @@ public class ProductBusinessImpl implements ProductBusiness {
 		}
 		prod.setSupplier(this.businesses.getSupplierBusiness().find(product.getSupplier().getId()));
 		prod.setCategory(this.businesses.getCategoryBusiness().find(product.getCategory().getId()));
+		this.daos.getRepositoryDao().findAll().stream().parallel().forEach(repository -> {
+			try {
+				ProductRepository pr = new ProductRepository();
+				this.daos.getProductRepositoryDao().create(pr);
+				pr.setProduct(prod);
+				pr.setRepository(repository);
+				pr.setPrice((prod.getBasePrice() * repository.getEffectivePricePercentage())/100);
+				pr.setExternal(repository.getExternal());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		return prod;
 	}
 

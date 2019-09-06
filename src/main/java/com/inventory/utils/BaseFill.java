@@ -35,12 +35,15 @@ class IncludeMapping {
 		Class<?> targetFieldClass = ObjectUtils.getFieldClass(targetClass, desiredMap);
 		Object sourceFieldValue = ObjectUtils.getValueBykey(source, desiredMap);
 		Object targetFieldValue = ObjectUtils.getValueBykey(target, desiredMap);
-		Boolean isSourceCollection = PersistentBag.class.isAssignableFrom(sourceFieldValue.getClass()) || PersistentBag.class.isAssignableFrom(sourceFieldClass) || Collection.class.isAssignableFrom(sourceFieldClass);
+		Boolean isSourceCollection = (sourceFieldValue != null
+				&& PersistentBag.class.isAssignableFrom(sourceFieldValue.getClass()))
+				|| PersistentBag.class.isAssignableFrom(sourceFieldClass)
+				|| Collection.class.isAssignableFrom(sourceFieldClass);
 		Boolean isTargetCollection = Collection.class.isAssignableFrom(targetFieldClass);
 		Boolean areBothCollections = isSourceCollection && isTargetCollection;
 		Boolean areDirectlyCompatible = sourceFieldClass.equals(targetFieldClass);
 		Boolean isSourceObject = !ClassUtils.isPrimitiveOrWrapper(sourceFieldClass);
-		Boolean isTargetFieldNull  = ObjectUtils.isFalsey(targetFieldValue);
+		Boolean isTargetFieldNull = ObjectUtils.isFalsey(targetFieldValue);
 		Boolean isTargetObject = !ClassUtils.isPrimitiveOrWrapper(targetFieldClass);
 		Boolean areBothObjects = isSourceObject && isTargetObject;
 		Boolean isSourceFiledNull = ObjectUtils.isFalsey(sourceFieldValue);
@@ -52,16 +55,14 @@ class IncludeMapping {
 		} else if (isSourceCollection && isTargetCollection) {
 			Field innerSourceFiled = ObjectUtils.getFieldByName(sourceClass, desiredMap);
 			Field innerTargetField = ObjectUtils.getFieldByName(targetClass, desiredMap);
-			Class<?> innerSourceFieldClass = ObjectUtils
-					.getWrappedGenericType(innerSourceFiled);
-			Class<?> innerTargetFieldClass = ObjectUtils
-					.getWrappedGenericType(innerTargetField);
+			Class<?> innerSourceFieldClass = ObjectUtils.getWrappedGenericType(innerSourceFiled);
+			Class<?> innerTargetFieldClass = ObjectUtils.getWrappedGenericType(innerTargetField);
 			if (innerSourceFieldClass.equals(innerTargetFieldClass)) {
 				targetFieldValue = sourceFieldValue;
 			} else {
 				List targetList = new ArrayList<>();
 				Collection sourceList = (Collection) sourceFieldValue;
-				if(sourceList.size() >= 0)
+				if (sourceList.size() >= 0)
 					sourceList.forEach(crrItem -> {
 						Object desiredObject = ObjectUtils.createNewInstanceForType(innerTargetFieldClass);
 						if (ObjectUtils.isThruthy(desiredObject)) {

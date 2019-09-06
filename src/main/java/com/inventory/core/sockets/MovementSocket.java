@@ -12,7 +12,6 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inventory.core.business.MovementBusiness;
 import com.inventory.helpers.ResponseCanonical;
@@ -21,7 +20,7 @@ import com.inventory.models.query.MovementQuery;
 import com.inventory.utils.ObjectUtils;
 
 @Controller
-@RequestMapping("/movements")
+//@RequestMapping("/movements")
 public class MovementSocket {
 
 	MovementBusiness business;
@@ -32,8 +31,8 @@ public class MovementSocket {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@MessageMapping("/rollback-movement/{parentMovementId}")
-	@SendToUser("/queue/movement-rolledback")
+	@MessageMapping("/movements/rollback-movement/{parentMovementId}")
+	@SendToUser("/queue/movements/movement-rolledback")
 	public ResponseCanonical<MovementDto> rollbackMovement(@DestinationVariable Long parentMovementId,
 			@Payload MovementDto headerInfo) {
 		if (ObjectUtils.isThruthy(headerInfo) && ObjectUtils.isThruthy(headerInfo.getMovementDetails())) {
@@ -46,22 +45,22 @@ public class MovementSocket {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@MessageMapping("/generate-movement")
-	@SendToUser("/queue/movement-generated")
+	@MessageMapping("/movements/generate-movement")
+	@SendToUser("/queue/movements/movement-generated")
 	public ResponseCanonical<MovementDto> generateMovement(@Payload MovementDto movementInfo) {
 		return new ResponseCanonical<MovementDto>(this.business.generateMovement(movementInfo).fillDtoModel());
 	}
 
-	@MessageMapping("/list-movements")
-	@SendTo("/topic/movements-listed")
+	@MessageMapping("/movements/list-movements")
+	@SendTo("/topic/movements/movements-listed")
 	public ResponseCanonical<List<MovementDto>> listMovements(@Payload MovementQuery query) {
 		return new ResponseCanonical<List<MovementDto>>(this.business.list(query).parallelStream()
 				.map(item -> item.fillDtoModel()).collect(Collectors.toList()));
 
 	}
 
-	@MessageMapping("/find-movement/{movementId}")
-	@SendTo("/topic/movement-found")
+	@MessageMapping("/movements/find-movement/{movementId}")
+	@SendTo("/topic/movements/movement-found")
 	public ResponseCanonical<MovementDto> findMovement(@DestinationVariable Long movementId) {
 		return new ResponseCanonical<MovementDto>(this.business.find(movementId).fillDtoModel());
 	}

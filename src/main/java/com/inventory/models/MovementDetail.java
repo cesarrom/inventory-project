@@ -42,6 +42,9 @@ public class MovementDetail extends CommonModel {
 	private Date updatedAt;
 
 	private double value;
+	
+	@Column(name="discount_percentage")
+	private double discountPercentage;
 
 	//bi-directional many-to-one association to MovementTypeDto
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -107,6 +110,14 @@ public class MovementDetail extends CommonModel {
 	}
 
 	
+
+	public double getDiscountPercentage() {
+		return discountPercentage;
+	}
+
+	public void setDiscountPercentage(double discountPercentage) {
+		this.discountPercentage = discountPercentage;
+	}
 
 	public Movement getMovement() {
 		return this.movement;

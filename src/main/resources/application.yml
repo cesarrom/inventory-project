@@ -14,7 +14,9 @@ spring:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/stockable
     username: cesarrom
+    initialization-mode: always
   jpa:
+    generate-ddl: true
     hibernate:
       ddl-auto: update
     properties:

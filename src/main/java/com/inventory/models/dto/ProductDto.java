@@ -26,9 +26,11 @@ public class ProductDto extends CommonModelDto {
 
 	private String photo;
 
-	private Integer unitType;
+	private String unitType;
 
 	private Date updatedAt;
+	
+	private Double basePrice;
 
 	// bi-directional many-to-one association to MovementDetailDto
 
@@ -97,11 +99,11 @@ public class ProductDto extends CommonModelDto {
 		this.photo = photo;
 	}
 
-	public Integer getUnitType() {
+	public String getUnitType() {
 		return this.unitType;
 	}
 
-	public void setUnitType(Integer unitType) {
+	public void setUnitType(String unitType) {
 		this.unitType = unitType;
 	}
 
@@ -111,6 +113,14 @@ public class ProductDto extends CommonModelDto {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Double getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(Double basePrice) {
+		this.basePrice = basePrice;
 	}
 
 	public List<MovementDetailDto> getMovementDetails() {

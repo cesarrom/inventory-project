@@ -29,7 +29,8 @@ public class ProductRepositoryDto extends CommonModelDto {
 	private ProductDto product;
 
 	// bi-directional many-to-one association to RepositoryDto
-
+	private boolean external;
+	
 	private RepositoryDto repository;
 
 	private List<MovementDetailDto> positiveMovements;
@@ -37,6 +38,16 @@ public class ProductRepositoryDto extends CommonModelDto {
 	private List<MovementDetailDto> negativeMovements;
 
 	public ProductRepositoryDto() {
+	}
+	
+	public Boolean getExternal() {
+		return external;
+	}
+
+	public void setExternal(Boolean external) {
+		if(external)
+			this.setCurrentQuantity(Double.POSITIVE_INFINITY);
+		this.external = external;
 	}
 
 	public Long getId() {

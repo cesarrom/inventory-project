@@ -21,6 +21,8 @@ public class RepositoryDto extends CommonModelDto {
 	private String description;
 
 	private String name;
+	
+	private Double effectivePricePercentage;
 
 	private Date updatedAt;
 
@@ -36,7 +38,7 @@ public class RepositoryDto extends CommonModelDto {
 
 	private List<ProductRepositoryDto> productRepositories;
 
-	private Boolean external;
+	private boolean external;
 
 	public RepositoryDto() {
 	}
@@ -133,12 +135,20 @@ public class RepositoryDto extends CommonModelDto {
 		this.productRepositories = productRepositories;
 	}
 
-	public Boolean isExternal() {
+	public Boolean getExternal() {
 		return external;
 	}
 
 	public void setExternal(Boolean external) {
 		this.external = external;
+	}
+
+	public Double getEffectivePricePercentage() {
+		return effectivePricePercentage;
+	}
+
+	public void setEffectivePricePercentage(Double effectivePricePercentage) {
+		this.effectivePricePercentage = effectivePricePercentage;
 	}
 
 	public ProductRepositoryDto addProductRepository(ProductRepositoryDto productRepository) {

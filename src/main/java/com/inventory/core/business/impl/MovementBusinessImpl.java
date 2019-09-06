@@ -89,9 +89,9 @@ public class MovementBusinessImpl implements MovementBusiness {
 	private Movement generateMovement(Movement movement) {
 		MovementType movementType = this.businesses.getMovementTypeBusiness().find(movement.getMovementType().getId());
 		movement.setMovementType(movementType);
-		if (movementType.isParentMovementRequired() && ObjectUtils.isFalsey(movement.getMovement())) {
+		if (movementType.getParentMovementRequired() && ObjectUtils.isFalsey(movement.getMovement())) {
 			throw new BadRequestException("PARENT MOVEMENT IS REQUIRED FOR THIS PROCESS");
-		} else if (movementType.isParentMovementRequired()) {
+		} else if (movementType.getParentMovementRequired()) {
 			Movement parentMovement = this.find(movement.getMovement().getId());
 			if (ObjectUtils.isThruthy(parentMovement.getCustomer())) {
 				movement.setCustomer(parentMovement.getCustomer());
@@ -128,6 +128,15 @@ public class MovementBusinessImpl implements MovementBusiness {
 			this.daos.getMovementDetailDao().create(unsavedMovementDetail);
 			unsavedMovementDetail.setSourceProductRepository(sourceProductRepository);
 			unsavedMovementDetail.setTargetProductRepository(targetProductRepository);
+			if (unsavedMovementDetail.getQuantity() > 0 && unsavedMovementDetail.getValue() > 0) {
+				unsavedMovementDetail
+						.setDiscountPercentage(((product.getBasePrice() * unsavedMovementDetail.getQuantity())
+								/ unsavedMovementDetail.getValue()) * 100);
+			} else if (unsavedMovementDetail.getValue() > 0) {
+				unsavedMovementDetail.setDiscountPercentage(100);
+			} else {
+				unsavedMovementDetail.setDiscountPercentage(0);
+			}
 			unsavedMovementDetail.setProduct(product);
 			unsavedMovementDetail.setMovement(movement);
 			return unsavedMovementDetail;

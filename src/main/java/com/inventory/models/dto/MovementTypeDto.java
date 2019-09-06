@@ -113,7 +113,7 @@ public class MovementTypeDto extends CommonModelDto {
 		this.targetRepository = repository1;
 	}
 
-	public Boolean isParentMovementRequired() {
+	public Boolean getParentMovementRequired() {
 		return parentMovementRequired;
 	}
 

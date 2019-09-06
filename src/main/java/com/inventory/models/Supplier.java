@@ -16,27 +16,26 @@ import javax.persistence.Table;
 import com.inventory.models.dto.SupplierDto;
 import com.inventory.utils.BaseFill;
 
-
 /**
  * The persistent class for the suppliers database table.
  * 
  */
 @Entity
-@Table(name="suppliers")
-@NamedQuery(name="Supplier.findAll", query="SELECT s FROM Supplier s")
+@Table(name = "suppliers")
+@NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s")
 public class Supplier extends CommonModel {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SUPPLIERS_ID_GENERATOR", sequenceName="SUPPLIERS_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLIERS_ID_GENERATOR")
+	@SequenceGenerator(name = "SUPPLIERS_ID_GENERATOR", sequenceName = "SUPPLIERS_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUPPLIERS_ID_GENERATOR")
 	private Long id;
 
 	private String address;
 
 	private String code;
 
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private Date createdAt;
 
 	private String email;
@@ -45,19 +44,19 @@ public class Supplier extends CommonModel {
 
 	private String phone;
 
-	@Column(name="updated_at")
+	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	//bi-directional many-to-one association to CategoryDto
-	@OneToMany(mappedBy="supplier")
+	// bi-directional many-to-one association to CategoryDto
+	@OneToMany(mappedBy = "supplier")
 	private List<Category> categories;
 
-	//bi-directional many-to-one association to MovementDto
-	@OneToMany(mappedBy="supplier")
+	// bi-directional many-to-one association to MovementDto
+	@OneToMany(mappedBy = "supplier")
 	private List<Movement> movements;
 
-	//bi-directional many-to-one association to ProductDto
-	@OneToMany(mappedBy="supplier")
+	// bi-directional many-to-one association to ProductDto
+	@OneToMany(mappedBy = "supplier")
 	private List<Product> products;
 
 	public Supplier() {
@@ -195,12 +194,13 @@ public class Supplier extends CommonModel {
 
 	@Override
 	public SupplierDto fillDtoModel(String[] include) {
+		include = include != null ? include : new String[] {};
 		return BaseFill.actualFillToDtoModel(this, new SupplierDto(), include);
 	}
 
 	@Override
 	public SupplierDto fillDtoModel() {
-		return this.fillDtoModel(new String[]{});
+		return this.fillDtoModel(new String[] {});
 	}
 
 }

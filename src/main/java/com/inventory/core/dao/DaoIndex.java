@@ -23,7 +23,7 @@ public class DaoIndex {
 	@Autowired
 	private ProductRepositoryDao productRepositoryDao;
 	@Autowired
-	private RepositoryDao repositoryBusuiness;
+	private RepositoryDao repositoryDao;
 	@Autowired
 	private SupplierDao supplierDao; 
 	
@@ -48,8 +48,8 @@ public class DaoIndex {
 	public ProductRepositoryDao getProductRepositoryDao() {
 		return productRepositoryDao;
 	}
-	public RepositoryDao getRepositoryBusuiness() {
-		return repositoryBusuiness;
+	public RepositoryDao getRepositoryDao() {
+		return repositoryDao;
 	}
 	public SupplierDao getSupplierDao() {
 		return supplierDao;

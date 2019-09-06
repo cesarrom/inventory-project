@@ -12,7 +12,6 @@ import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inventory.core.business.RepositoryBusiness;
 import com.inventory.helpers.ResponseCanonical;
@@ -20,7 +19,7 @@ import com.inventory.models.dto.RepositoryDto;
 import com.inventory.models.query.RepositoryQuery;
 
 @Controller
-@RequestMapping("/repositories")
+//@RequestMapping("/repositories")
 public class RepositorySocket extends IAMSocket<RepositoryDto, RepositoryQuery, RepositoryBusiness> {
 	@Autowired
 	public RepositorySocket(RepositoryBusiness business) {
@@ -29,30 +28,30 @@ public class RepositorySocket extends IAMSocket<RepositoryDto, RepositoryQuery, 
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { RuntimeException.class })
-	@MessageMapping("/find-repositoriy")
-	@SendToUser("/queue/repository-found")
+	@MessageMapping("/repositories/find-repositoriy")
+	@SendToUser("/queue/repositories/repository-found")
 	public ResponseCanonical<RepositoryDto> findRepository(@DestinationVariable Long id) {
 		return new ResponseCanonical<RepositoryDto>(this.business.find(id).fillDtoModel());
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { RuntimeException.class })
-	@MessageMapping("/list-repositories")
-	@SendToUser("/queue/repositories-listed")
+	@MessageMapping("/repositories/list-repositories")
+	@SendToUser("/queue/repositories/repositories-listed")
 	public ResponseCanonical<List<RepositoryDto>> listRepositories(@Payload RepositoryQuery query) {
 		return new ResponseCanonical<List<RepositoryDto>>(this.business.list(query).parallelStream()
 				.map(item -> item.fillDtoModel()).collect(Collectors.toList()));
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { RuntimeException.class })
-	@MessageMapping("/create-repository")
-	@SendTo("/topic/repository-created")
+	@MessageMapping("/repositories/create-repository")
+	@SendTo("/topic/repositories/repository-created")
 	public ResponseCanonical<RepositoryDto> createRepository(@Payload RepositoryDto entityParam) {
 		return new ResponseCanonical<RepositoryDto>(this.business.create(entityParam).fillDtoModel());
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { RuntimeException.class })
-	@MessageMapping("/update-repository/{id}")
-	@SendTo("/topic/repository-updated")
+	@MessageMapping("/repositories/update-repository/{id}")
+	@SendTo("/topic/repositories/repository-updated")
 	public ResponseCanonical<RepositoryDto> updateRepository(@DestinationVariable Long id,
 			@Payload RepositoryDto entityParam) {
 		return new ResponseCanonical<RepositoryDto>(this.business.update(id, entityParam).fillDtoModel());

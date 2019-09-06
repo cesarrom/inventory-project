@@ -27,7 +27,7 @@ public class ProductRepositoryCustomRepositoryImpl implements ProductRepositoryC
 		queryStr.append("SELECT pr FROM "+ ProductRepository.class.getSimpleName() +" pr "
 				+ " LEFT JOIN pr.product AS bc "
 				+ " LEFT JOIN pr.repository AS r LEFT JOIN bc.category AS ct"
-				+ " LEFT JOIN bc.suppliers AS sspls"
+				+ " LEFT JOIN bc.supplier AS sspls"
 				+ " LEFT JOIN bc.movementDetails AS mds LEFT JOIN mds.movement AS mvm LEFT JOIN mvm.customer AS cs"
 				+ " LEFT JOIN mvm.supplier AS spls"
 				+ " WHERE 1 = 1");

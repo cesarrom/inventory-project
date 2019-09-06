@@ -62,7 +62,7 @@ public class ProductRepository extends CommonModel {
 	@OneToMany(mappedBy="sourceProductRepository")
 	private List<MovementDetail> negativeMovements;
 	
-	private Boolean external;
+	private boolean external;
 	
 	public ProductRepository() {
 	}
@@ -84,13 +84,13 @@ public class ProductRepository extends CommonModel {
 	}
 
 	public double getCurrentQuantity() {
-		if(this.isExternal())
+		if(this.getExternal())
 			return Double.POSITIVE_INFINITY;
 		return this.currentQuantity;
 	}
 
 	public void setCurrentQuantity(double currentQuantity) {
-		if(this.isExternal())
+		if(this.getExternal())
 			this.currentQuantity = Double.POSITIVE_INFINITY;
 		else
 			this.currentQuantity = currentQuantity;
@@ -132,7 +132,7 @@ public class ProductRepository extends CommonModel {
 		return positiveMovements;
 	}
 
-	public Boolean isExternal() {
+	public Boolean getExternal() {
 		return external;
 	}
 

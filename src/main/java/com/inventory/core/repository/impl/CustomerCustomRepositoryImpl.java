@@ -24,7 +24,7 @@ public class CustomerCustomRepositoryImpl implements CustomerCustomRepository {
 	public List<Customer> list(CustomerQuery queryParams) {
 		StringBuilder queryStr = new StringBuilder();
 		Map<String, Object> nameValue = new HashMap<>();
-		queryStr.append("SELECT bc FROM "+ Customer.class.getSimpleName() +" LEFT JOIN bc.movements AS mvs LEFT JOIN bc.product AS p  bc WHERE 1 = 1");
+		queryStr.append("SELECT bc FROM "+ Customer.class.getSimpleName() +" bc LEFT JOIN bc.movements AS mvs LEFT JOIN mvs.movementDetails AS mvsds LEFT JOIN mvsds.product AS p WHERE 1 = 1");
 		if (ObjectUtils.isThruthy(queryParams.getFrom())) {
 			queryStr.append(" AND bc.createdAt >= :fromParam ");
 			nameValue.put("fromParam", queryParams.getFrom());
@@ -42,7 +42,7 @@ public class CustomerCustomRepositoryImpl implements CustomerCustomRepository {
 			nameValue.put("productId", queryParams.getProductId());
 		}
 		if (ObjectUtils.isThruthy(queryParams.getName())) {
-			queryStr.append(" AND bc.description LIKE :name ");
+			queryStr.append(" AND bc.name LIKE :name ");
 			nameValue.put("name", "%" + queryParams.getName() + "%");
 		}
 		TypedQuery<Customer> query = em.createQuery(queryStr.toString(), Customer.class);

@@ -47,10 +47,13 @@ public class Product extends CommonModel {
 	private String photo;
 
 	@Column(name="unit_type")
-	private Integer unitType;
+	private String unitType;
 
 	@Column(name="updated_at")
 	private Date updatedAt;
+	
+	@Column(name="base_price")
+	private Double basePrice;
 
 	//bi-directional many-to-one association to MovementDetailDto
 	@OneToMany(mappedBy="product")
@@ -121,11 +124,11 @@ public class Product extends CommonModel {
 		this.photo = photo;
 	}
 
-	public Integer getUnitType() {
+	public String getUnitType() {
 		return this.unitType;
 	}
 
-	public void setUnitType(Integer unitType) {
+	public void setUnitType(String unitType) {
 		this.unitType = unitType;
 	}
 
@@ -135,6 +138,14 @@ public class Product extends CommonModel {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Double getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(Double basePrice) {
+		this.basePrice = basePrice;
 	}
 
 	public List<MovementDetail> getMovementDetails() {

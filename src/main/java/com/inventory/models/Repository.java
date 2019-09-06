@@ -53,8 +53,10 @@ public class Repository extends CommonModel {
 	//bi-directional many-to-one association to ProductRepositoryDto
 	@OneToMany(mappedBy="repository")
 	private List<ProductRepository> productRepositories;
+	@Column(name="effective_price_percentage")
+	private Double effectivePricePercentage;
 	
-	private Boolean external;
+	private boolean external;
 
 	public Repository() {
 	}
@@ -151,12 +153,20 @@ public class Repository extends CommonModel {
 		this.productRepositories = productRepositories;
 	}
 
-	public Boolean isExternal() {
+	public Boolean getExternal() {
 		return external;
 	}
 
 	public void setExternal(Boolean external) {
 		this.external = external;
+	}
+
+	public Double getEffectivePricePercentage() {
+		return effectivePricePercentage;
+	}
+
+	public void setEffectivePricePercentage(Double effectivePricePercentage) {
+		this.effectivePricePercentage = effectivePricePercentage;
 	}
 
 	public ProductRepository addProductRepository(ProductRepository productRepository) {

@@ -22,6 +22,8 @@ public class MovementDetailDto extends CommonModelDto {
 	private Date updatedAt;
 
 	private double value;
+	
+	private double discountPercentage;
 
 	// bi-directional many-to-one association to MovementTypeDto
 
@@ -80,6 +82,14 @@ public class MovementDetailDto extends CommonModelDto {
 
 	public void setValue(double value) {
 		this.value = value;
+	}
+
+	public double getDiscountPercentage() {
+		return discountPercentage;
+	}
+
+	public void setDiscountPercentage(double discountPercentage) {
+		this.discountPercentage = discountPercentage;
 	}
 
 	public MovementDto getMovement() {
